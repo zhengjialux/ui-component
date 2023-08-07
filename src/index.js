@@ -1,17 +1,31 @@
-function component() {
-  const element = document.createElement('div');
+import React, { StrictMode } from "react";
+import { createRoot } from 'react-dom/client';
+import {
+  createBrowserRouter,
+  createHashRouter,
+  RouterProvider,
+} from "react-router-dom";
+import Root from './demo/index';
+import ErrorPage from "./error-page";
+import BreadcrumbPage from "./demo/breadcrumb-page";
 
-  // lodash（目前通过一个 script 引入）对于执行这一行是必需的
-  element.innerHTML = _.join(['Hello', 'webpack'], ' ');
+const router = createHashRouter([
+  {
+    path: "/",
+    element: <Root />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/breadcrumb-page",
+        element: <BreadcrumbPage />,
+      },
+    ],
+  },
+]);
 
-  return element;
-}
-
-document.body.appendChild(component());
-
-if (module.hot) {
-  module.hot.accept('./print.js', function () {
-    console.log('Accepting the updated printMe module!');
-    printMe();
-  })
-}
+const root = createRoot(document.getElementById('root'));
+root.render(
+  <StrictMode>
+    <RouterProvider router={router} />
+  </StrictMode>
+);

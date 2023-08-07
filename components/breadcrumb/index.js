@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Tooltip } from "antd";
-import styles from "./folder_breadcrumb.less";
+import styles from "./index.css";
 
-const Breadcrumbs = ({ items, itemWorkWidth, onClick }) => {
+const Breadcrumbs = ({ data, width, onClick }) => {
   const containerRef = useRef(null);
   const [visibleItems, setVisibleItems] = useState([]);
   const [isOverflowing, setIsOverflowing] = useState(false);
@@ -20,12 +20,12 @@ const Breadcrumbs = ({ items, itemWorkWidth, onClick }) => {
     // 占位数据
     const ellipsisObj = {
       name: '...',
-      fileID: 0
+      id: 0
     }
 
     const measureHeight = () => {
-      for (let i = 1; i <= items.length; i++) {
-        const itemInfo = items[items.length - i]
+      for (let i = 1; i <= data.length; i++) {
+        const itemInfo = data[data.length - i]
 
         if (!itemInfo) break;
         if (currentWidth > availableWidth) {
@@ -40,13 +40,13 @@ const Breadcrumbs = ({ items, itemWorkWidth, onClick }) => {
         }
       }
 
-      if (tempVisibleItems.length !== items.length) {
+      if (tempVisibleItems.length !== data.length) {
         tempVisibleItems.splice(1, 0, ellipsisObj)
       }
     }
 
-    for (let i = 0; i < items.length; i++) {
-      const item = items[i];
+    for (let i = 0; i < data.length; i++) {
+      const item = data[i];
       const itemText = item.name; // 提取对象的特定属性
       const itemWidth = getTextStyle(itemText + joinSymbol)?.width;
       // 循环所有的数据，累加自己的宽度
@@ -67,11 +67,11 @@ const Breadcrumbs = ({ items, itemWorkWidth, onClick }) => {
 
     setVisibleItems(tempVisibleItems.reverse());
     setIsOverflowing(isOverflowing);
-  }, [items]);
+  }, [data]);
 
   // 获取内容的宽度
   const getTextStyle = (text) => {
-    const itemWidth = itemWorkWidth
+    const itemWidth = width
     const tempElement = document.createElement('span');
     tempElement.style.visibility = 'hidden';
     tempElement.style.position = 'absolute';
@@ -96,21 +96,21 @@ const Breadcrumbs = ({ items, itemWorkWidth, onClick }) => {
   // 完整面包屑
   const completeDom = (
     <div>
-      {items.map((item, index) => {
-        if (index === items.length - 1) {
+      {data.map((item, index) => {
+        if (index === data.length - 1) {
           return (
             <span
               style={{ color: '#000' }}
-              key={`${item.fileID}`}>
+              key={`${item.id}`}>
               {item.name}
             </span>
           )
         }
         return (
           <a
-            key={`${item.fileID}`}
+            key={`${item.id}`}
             onClick={() => {
-              if (item.fileID) {
+              if (item.id) {
                 onClick(item, index)
               }
             }}
@@ -125,14 +125,14 @@ const Breadcrumbs = ({ items, itemWorkWidth, onClick }) => {
   return (
     <div
       className="breadcrumbBox"
-      style={{ overflow: "hidden", width: itemWorkWidth }}
+      style={{ overflow: "hidden", width: width }}
       ref={containerRef}
     >
       <Tooltip
         placement="bottom"
         title={isOverflowing ? completeDom : null}
-        overlayStyle={{ maxWidth: itemWorkWidth }}
-        overlayInnerStyle={{ width: itemWorkWidth, wordBreak: 'break-all' }}
+        overlayStyle={{ maxWidth: width }}
+        overlayInnerStyle={{ width, wordBreak: 'break-all' }}
       >
         <div style={{ display: 'flex' }}>
           {visibleItems.map((item, index) => {
@@ -140,17 +140,17 @@ const Breadcrumbs = ({ items, itemWorkWidth, onClick }) => {
               return (
                 <div
                   className={styles.ellipsis}
-                  style={{ color: '#000', maxWidth: itemWorkWidth }}
-                  key={`${item.fileID}`}>
+                  style={{ color: '#000', maxWidth: width }}
+                  key={`${item.id}`}>
                   {item.name}
                 </div>
               )
             }
             return (
-              <div key={`${item.fileID}`}>
+              <div key={`${item.id}`}>
                 <a
                   onClick={() => {
-                    if (item.fileID) {
+                    if (item.id) {
                       onClick(item, index)
                     }
                   }}
@@ -158,7 +158,7 @@ const Breadcrumbs = ({ items, itemWorkWidth, onClick }) => {
                 >
                   <span
                     className={styles.ellipsis}
-                    style={{ maxWidth: itemWorkWidth }}
+                    style={{ maxWidth: width }}
                   >
                     {item.name}
                   </span>
