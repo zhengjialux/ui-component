@@ -1,5 +1,5 @@
 import { Outlet, Link } from "react-router-dom";
-import styles from './index.css';
+import styles from './index.less';
 
 export default function Root() {
   return (
@@ -15,6 +15,9 @@ export default function Root() {
           <ul>
             <li>
               <Link to={`/breadcrumb-page`}>面包屑演示</Link>
+            </li>
+            <li>
+              <Link to={`/folder-list-page`}>文件夹列表演示</Link>
             </li>
           </ul>
         </nav>

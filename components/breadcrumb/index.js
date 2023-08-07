@@ -10,7 +10,7 @@ const Breadcrumbs = ({ data, width, onClick }) => {
 
   useEffect(() => {
     // 范围内的宽度
-    const availableWidth = document.querySelector('.breadcrumbBox')?.offsetWidth;
+    const availableWidth = document.querySelector(`.${styles.breadcrumbBox}`)?.offsetWidth;
     // 所有元素累加的宽度
     let currentWidth = 0;
     // 处理完的面包屑
@@ -124,7 +124,7 @@ const Breadcrumbs = ({ data, width, onClick }) => {
 
   return (
     <div
-      className="breadcrumbBox"
+      className={styles.breadcrumbBox}
       style={{ overflow: "hidden", width: width }}
       ref={containerRef}
     >

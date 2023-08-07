@@ -1,11 +1,11 @@
 
 import { Col, Row, Button, Popconfirm, List, Typography } from "antd";
 import VirtualList from 'rc-virtual-list';
-import folder_icon from "@/assets/office_iocn/folder.svg";
+import folder_icon from "../assets/folder_iocn/folder.svg";
 import { useEffect, useState } from "react";
 import styles from "./index.less";
 import office_iocn from "./office_iocn";
-import delete_icon from '@/assets/delete.svg'
+import delete_icon from '../assets/delete.svg'
 import { fileSizeConversion } from "@/utils/utils";
 
 const FolderList = ({

@@ -21,7 +21,7 @@ module.exports = {
         use: ['babel-loader'],
       },
       {
-        test: /\.css$/i,
+        test: /\.(css|less)$/i,
         use: [
           'style-loader',
           {
@@ -29,7 +29,8 @@ module.exports = {
             options: {
               modules: true,
             },
-          }
+          },
+          'less-loader'
         ],
       },
       {

@@ -8,6 +8,7 @@ import {
 import Root from './demo/index';
 import ErrorPage from "./error-page";
 import BreadcrumbPage from "./demo/breadcrumb-page";
+import FolderListPage from "./demo/folder-list-page";
 
 const router = createHashRouter([
   {
@@ -18,6 +19,10 @@ const router = createHashRouter([
       {
         path: "/breadcrumb-page",
         element: <BreadcrumbPage />,
+      },
+      {
+        path: "/folder-list-page",
+        element: <FolderListPage />,
       },
     ],
   },
