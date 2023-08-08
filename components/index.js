@@ -1,3 +1,3 @@
-export { Breadcrumb } from "./breadcrumb";
-export { FolderList } from "./folder-list";
-export { InputNumber } from "./input-number";
+export * from "./breadcrumb";
+export * from "./folder-list";
+export * from "./input-number";
