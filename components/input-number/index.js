@@ -1,7 +1,7 @@
 // 数字输入框组件
 import { Input } from "antd";
 
-const IconLoading = props => {
+const InputNumber = props => {
   const { value, onChange, output = 'Number' } = props
   let _value = value
 
@@ -65,4 +65,4 @@ const IconLoading = props => {
   />
 }
 
-export default IconLoading;
+export default InputNumber;
