@@ -1,5 +1,5 @@
 import React from "react";
-import FolderList from "@/components/folderList";
+import FolderList from "@/components/folder-list";
 import dataList from "./mock-data";
 
 // 文件夹表头
