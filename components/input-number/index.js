@@ -1,5 +1,4 @@
 // 数字输入框组件
-import React, { useState, useEffect } from 'react';
 import { Input } from "antd";
 
 const IconLoading = props => {
