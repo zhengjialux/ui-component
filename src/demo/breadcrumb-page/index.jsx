@@ -1,5 +1,5 @@
 import React from "react";
-import Breadcrumb from "@/components/breadcrumb";
+import { Breadcrumb } from "@/components";
 import dataList from "./mock-data";
 
 export default class BreadcrumbPage extends React.Component {

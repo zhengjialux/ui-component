@@ -1,5 +1,5 @@
 import React from "react";
-import FolderList from "@/components/folder-list";
+import { FolderList } from "@/components";
 // import { FolderList } from "@zhengjialux/ui-component";
 import dataList from "./mock-data";
 
