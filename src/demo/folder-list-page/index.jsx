@@ -1,6 +1,6 @@
 import React from "react";
-import { FolderList } from "@/components";
-// import { FolderList } from "@zhengjialux/ui-component";
+// import { FolderList } from "@/components";
+import { FolderList } from "@zhengjialux/ui-component";
 import dataList from "./mock-data";
 
 // 文件夹表头
