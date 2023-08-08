@@ -1,6 +1,6 @@
 {
   "name": "@zhengjialux/ui-component",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "UI交互组件",
   "main": "index.js",
   "scripts": {
