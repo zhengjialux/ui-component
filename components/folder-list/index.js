@@ -4,7 +4,7 @@ import VirtualList from 'rc-virtual-list';
 import folder_icon from "../assets/folder_iocn/folder.svg";
 import { useEffect, useState } from "react";
 import styles from "./index.less";
-import office_iocn from "./office_iocn";
+import defaultIocnList from "./default_icon";
 import delete_icon from '../assets/delete.svg'
 import { fileSizeConversion } from "@zhengjialux/tool-box";
 
@@ -18,6 +18,7 @@ const FolderList = ({
   setDefaultActiveKey,
   isDelete,
   listSpan,
+  iconList = defaultIocnList,
   onClick = () => { },
   onScroll = () => { },
   getScroll = () => { },
@@ -85,7 +86,7 @@ const FolderList = ({
                   const suffix = item.suffix ? item.suffix.split('.')[1] : ''
                   const imgUrl = item.type === 'dir'
                     ? folder_icon
-                    : office_iocn[suffix] ? office_iocn[suffix] : office_iocn['unknown']
+                    : iconList[suffix] ? iconList[suffix] : iconList['unknown']
 
                   return (
                     <Col
