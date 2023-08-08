@@ -1,0 +1,13 @@
+.ellipsis {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.breadcrumbBox {
+  a {
+    color: #1890ff;
+    cursor: pointer;
+  }
+}
