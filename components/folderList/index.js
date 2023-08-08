@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import styles from "./index.less";
 import office_iocn from "./office_iocn";
 import delete_icon from '../assets/delete.svg'
-import { fileSizeConversion } from "@/utils/utils";
+import { fileSizeConversion } from "@zhengjialux/tool-box";
 
 const FolderList = ({
   type = 'dir',
@@ -14,21 +14,21 @@ const FolderList = ({
   config = [],
   excludeHeight = 0,
   defaultActiveKey,
-  folderClick = () => { },
-  folderScroll = () => { },
-  getScrollTop,
-  folderDelete,
   virtualListRef,
-  setDefaultActiveKey
+  setDefaultActiveKey,
+  isDelete,
+  listSpan,
+  onClick = () => { },
+  onScroll = () => { },
+  getScroll = () => { },
+  onDelete = () => { },
 }) => {
   // 当前点击的文件夹高亮
   const [activeKey, setActiveKey] = useState('')
   // 显示删除按钮
   const [hideDeleteKey, setHideDeleteKey] = useState('')
-
-  // data.map((item, index) => item.fileID = index)
-
-  const listSpan = (index) => type === 'dir' ? (24 / config.length) : [10, 7, 6][index]
+  // 文件夹列表宽度
+  const fileSpan = (index) => listSpan ? listSpan[index] : (24 / config.length)
 
   useEffect(() => {
     setActiveKey(defaultActiveKey)
@@ -64,13 +64,13 @@ const FolderList = ({
                 setActiveKey(item.fileID)
               }
               if (type === 'dir') {
-                folderClick(item)
+                onClick(item)
               }
             }}
             onDoubleClick={() => {
               if (item.type === 'dir') {
                 setActiveKey(item.fileID)
-                folderClick(item)
+                onClick(item)
               }
             }}
             onMouseEnter={() => setHideDeleteKey(item.fileID)}
@@ -82,14 +82,14 @@ const FolderList = ({
               config.map(({ label, key }, index) => {
                 // 文件夹和文件图标展示
                 if (!index) {
-                  const suffix = item.suffix.split('.')[1]
+                  const suffix = item.suffix ? item.suffix.split('.')[1] : ''
                   const imgUrl = item.type === 'dir'
                     ? folder_icon
                     : office_iocn[suffix] ? office_iocn[suffix] : office_iocn['unknown']
 
                   return (
                     <Col
-                      span={listSpan(index)}
+                      span={fileSpan(index)}
                       key={`${label}_${index}`}
                       style={{
                         display: 'flex',
@@ -115,14 +115,14 @@ const FolderList = ({
                         {`${item[key]}${key === 'name' ? item.suffix : ''}`}
                       </div>
                       {
-                        type !== 'dir' && (
+                        isDelete && (
                           <div style={{ width: 40, textAlign: 'center' }}>
                             {
                               item.fileID === hideDeleteKey && (
                                 <Popconfirm
                                   className={styles.deleteWork}
                                   title="是否删除当前选项?"
-                                  onConfirm={() => folderDelete(item)}
+                                  onConfirm={() => onDelete(item)}
                                   okText="确定"
                                   cancelText="取消"
                                 >
@@ -145,7 +145,7 @@ const FolderList = ({
                   // 文件大小处理和展示
                   if (key === 'length') {
                     return (
-                      <Col span={listSpan(index)} key={`${label}_${index}`} offset={type === 'dir' ? 0 : 1}>
+                      <Col span={fileSpan(index)} key={`${label}_${index}`} offset={type === 'dir' ? 0 : 1}>
                         {item.type === 'file' ? fileSizeConversion(item[key]) : '--'}
                       </Col>
                     )
@@ -153,10 +153,10 @@ const FolderList = ({
                   // 文件夹ID展示
                   return (
                     <Col
-                      span={listSpan(index)}
+                      span={fileSpan(index)}
                       key={`${label}_${index}`}
                     >
-                      <Typography.Text ellipsis={true} title={item.type === 'dir' ? item[key] : ''}>{item.type === 'dir' ? item[key] : ''}</Typography.Text>
+                      <Typography.Text ellipsis={true} title={item[key]}>{item[key]}</Typography.Text>
                     </Col>
                   )
                 }
@@ -174,7 +174,7 @@ const FolderList = ({
     <Row className={styles.folderTitle}>
       {
         // 循环列表头列数
-        config.map(({ label, key }, index) => <Col span={listSpan(index)} key={`${label}_${index}`} offset={(type !== 'dir' && index === 1) ? 1 : 0}>{label}</Col>)
+        config.map(({ label, key }, index) => <Col span={fileSpan(index)} key={`${label}_${index}`} offset={(type !== 'dir' && index === 1) ? 1 : 0}>{label}</Col>)
       }
     </Row>
     <List>
@@ -183,10 +183,14 @@ const FolderList = ({
         height={virtualListHeight}
         onScroll={(e) => {
           const scrollHeight = virtualListHeight - (e.currentTarget.scrollHeight - e.currentTarget.scrollTop)
-          getScrollTop && getScrollTop(e.currentTarget.scrollTop)
+          getScroll({
+            virtualListHeight,
+            scrollHeight: e.currentTarget.scrollHeight,
+            scrollTop: e.currentTarget.scrollTop
+          })
           if (-scrollHeight < 3) {
             // console.log("滚动条接近最底部了")
-            folderScroll()
+            onScroll()
           }
         }}
         itemKey="fileID"
