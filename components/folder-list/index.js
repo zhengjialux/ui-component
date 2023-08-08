@@ -8,7 +8,7 @@ import defaultIocnList from "./default_icon";
 import delete_icon from '../assets/delete.svg'
 import { fileSizeConversion } from "@zhengjialux/tool-box";
 
-const FolderList = ({
+export const FolderList = ({
   type = 'dir',
   data = [],
   config = [],
@@ -203,5 +203,3 @@ const FolderList = ({
     </List>
   </>
 }
-
-export default FolderList

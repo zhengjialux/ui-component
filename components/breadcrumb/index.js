@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Tooltip } from "antd";
 import styles from "./index.css";
 
-const Breadcrumb = ({ data, width, onClick }) => {
+export const Breadcrumb = ({ data, width, onClick }) => {
   const containerRef = useRef(null);
   const [visibleItems, setVisibleItems] = useState([]);
   const [isOverflowing, setIsOverflowing] = useState(false);
@@ -172,5 +172,3 @@ const Breadcrumb = ({ data, width, onClick }) => {
     </div>
   );
 };
-
-export default Breadcrumb;

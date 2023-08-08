@@ -1,7 +1,7 @@
 // 数字输入框组件
 import { Input } from "antd";
 
-const InputNumber = props => {
+export const InputNumber = props => {
   const { value, onChange, output = 'Number' } = props
   let _value = value
 
@@ -64,5 +64,3 @@ const InputNumber = props => {
     onBlur={onBlur}
   />
 }
-
-export default InputNumber;
