@@ -7,6 +7,7 @@ export const InputNumber = props => {
 
   // 改变数值时进行字符串校验
   const _onChange = ({ target }) => {
+    // 定制字符串小数
     if (output === 'Decimal') {
       // 正则限制只能输入小数2位，分4步正则过滤
       // 第一步：过滤掉除数字和点意外的字符；
@@ -21,18 +22,33 @@ export const InputNumber = props => {
         _value = targetValue
       }
       onChange(targetValue ? _value : targetValue)
+    } else if (output === 'NONE') {
+      // 数字加字母
+      const targetValue = `${target.value}`.replace(/[^a-zA-Z0-9]/g, "");
+      if (targetValue) {
+        _value = targetValue
+      }
+      onChange(targetValue ? _value : targetValue)
     } else {
       // 正则过滤数字以外的字符
       const targetValue = `${target.value}`.replace(/\D+/g, '')
       if (targetValue) {
         _value = targetValue
       }
-      if (output === 'Number' || output === 'Email') {
+      // 邮箱
+      if (output === 'Email') {
         onChange(targetValue ? _value : targetValue)
       }
-      // if (output === 'Email') {
-      //   onChange(targetValue ? _value : targetValue)
-      // }
+      // 数字字符串
+      if (output === 'Number') {
+        let stringNumber = targetValue ? _value : targetValue
+        // 如果第一个是0，需要切掉。
+        // 不做数字装换，因为太大会显示成科学计数法。
+        if (stringNumber[0] === '0') {
+          stringNumber = stringNumber.slice(1)
+        }
+        onChange(stringNumber)
+      }
     }
   }
 
